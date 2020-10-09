@@ -25,4 +25,4 @@ dico = to_dict(tree)
 
 dico_to_file(dico, 'dico_output.txt')
 
-texte_parser.text_to_bin('dico_output.txt')
+texte_parser.text_to_bin('dico_output.txt', 'alice_huffman.txt')
