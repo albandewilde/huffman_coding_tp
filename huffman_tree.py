@@ -1,16 +1,18 @@
+from to_bin import write_to_file
+
 class Node(object):
     def __init__(self, left, right, content):
         self.content = content
         self.left = left
         self.right = right
 
-def sort_occurence_list(dico):
+def sort_occurence_dico(dico):
         return sorted(dico.items(), key=lambda elem: elem[1])
 
-def to_tree(occurence_list):
-    rt_nde = Node(None, None, occurence_list[0])
+def to_tree(occurence_dico):
+    rt_nde = Node(None, None, occurence_dico[0])
 
-    for nde in occurence_list[1:]:
+    for nde in occurence_dico[1:]:
         right_nde = Node(None, None, nde)
         left_nde = rt_nde
         rt_nde = Node(left_nde, right_nde, None)
@@ -32,11 +34,21 @@ def to_dict(root_node, dico={}, base_bit=""):
 
     return dico
 
+def dico_to_file(dico, path):
+    dico = sorted( dico.items(), key=lambda elem: elem[1] )
+
+    content = ''
+    for key, value in dico:
+        content += key + ':' + value + '\n'
+
+    with open(path, "w") as fle:
+        fle.write( content )
+
 if __name__ in "__main__":
     dico = {"r": 1, "t": 6, "e": 18, "4": 4, "3": 4}
     print("initial dico: ", dico)
 
-    lst = sort_occurence_list(dico)
+    lst = sort_occurence_dico(dico)
 
     tree = to_tree(lst)
 
