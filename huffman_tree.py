@@ -37,9 +37,11 @@ def to_dict(root_node, dico={}, base_bit=""):
 def dico_to_file(dico, path):
     dico = sorted( dico.items(), key=lambda elem: elem[1] )
 
-    content = ''
+    content = '{\n'
     for key, value in dico:
-        content += key + ':' + value + '\n'
+        content += '"' + key + '":"' + value + '",\n'
+
+    content = content + '}'
 
     with open(path, "w") as fle:
         fle.write( content )
