@@ -1,4 +1,6 @@
 from typing import Dict 
+from to_bin import read_file
+import json
 
 class TextParser:
 
@@ -18,3 +20,10 @@ class TextParser:
     def sort_dict(self, occurence: Dict[str, int]) -> Dict[str, int]:
         sorted_dict: Dict[str, int] = {k: v for k, v in sorted(occurence.items(), key=lambda item: item[1], reverse=True)}
         return sorted_dict
+
+    def text_to_bin(self, file: str, file_output:str) -> None:
+        bin_str = read_file(file)
+        dico: Dict[str, str] = json.loads(bin_str)
+        print(dico)
+        # with open(file_output, "r"):
+            

@@ -1,5 +1,5 @@
 from to_bin import write_to_file
-
+import json
 class Node(object):
     def __init__(self, left, right, content):
         self.content = content
@@ -35,16 +35,9 @@ def to_dict(root_node, dico={}, base_bit=""):
     return dico
 
 def dico_to_file(dico, path):
-    dico = sorted( dico.items(), key=lambda elem: elem[1] )
-
-    content = '{\n'
-    for key, value in dico:
-        content += '"' + key + '":"' + value + '",\n'
-
-    content = content + '}'
-
+    dico = {k: v for k, v in sorted(dico.items(), key=lambda item: item[1])}
     with open(path, "w") as fle:
-        fle.write( content )
+        fle.write( json.dumps(dico) )
 
 if __name__ in "__main__":
     dico = {"r": 1, "t": 6, "e": 18, "4": 4, "3": 4}
