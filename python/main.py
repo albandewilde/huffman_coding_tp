@@ -48,7 +48,9 @@ print("Writing to file: ", datetime.datetime.now() - begin)
 
 text_to_bin(alice, output_huffman_dict, output_huffman)
 
-decode_file(output_classic_bytes, output_decoded, huffman_dict)
+begin = datetime.datetime.now()
+decode_file(output_huffman, output_decoded, huffman_dict)
+print("Writing to file: ", datetime.datetime.now() - begin)
 
 # Just to see result
 alice_in_bytes = read_file(output_classic_bytes)

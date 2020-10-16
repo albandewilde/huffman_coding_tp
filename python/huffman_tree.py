@@ -34,13 +34,13 @@ def to_dict(root_node, dico={}, base_bit=""):
         dico[root_node.content[0]] = base_bit
 
     if root_node.right is not None:
-        to_dict(root_node.right, dico, "1"+base_bit)
+        to_dict(root_node.right, dico, base_bit+"1")
 
     if root_node.left is None:
         dico[root_node.content[0]] = base_bit
 
     if root_node.left is not None:
-        to_dict(root_node.left, dico, "0"+base_bit)
+        to_dict(root_node.left, dico, base_bit+"0")
 
     return dico
 
