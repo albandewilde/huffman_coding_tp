@@ -1,3 +1,5 @@
 *.swp
 /__pycache__/*
 output.txt
+encoded_output.txt
+decoded_output.txt

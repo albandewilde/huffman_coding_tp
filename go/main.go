@@ -42,12 +42,18 @@ func toTree(n *node, dico *map[string]string, baseBit string) {
 }
 
 func main() {
+
+	// First part, we will encode the file
+	encodingTime := time.Now()
+
 	// Read file
 	begin := time.Now()
 	content, err := ioutil.ReadFile("./alice.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
+	// Remove the last EOF caracter
+	content = content[:len(content)-1]
 	fmt.Println("Reading file: ", time.Since(begin))
 
 	// Counting occurence
@@ -105,6 +111,64 @@ func main() {
 
 	// Write the encoded content in file
 	begin = time.Now()
-	err = ioutil.WriteFile("output.txt", []byte(encodedContent), 0644)
+	err = ioutil.WriteFile("./encoded_output.txt", []byte(encodedContent), 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("Writing in file: ", time.Since(begin))
+
+	totalEncodingTime := time.Since(encodingTime)
+
+	// Second part we will decode the file
+	decodingTime := time.Now()
+
+	// Read the encoded file
+	begin = time.Now()
+	contentEncoded, err := ioutil.ReadFile("./encoded_output.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Reading file: ", time.Since(begin))
+	encodedFileContent := string(contentEncoded)
+
+	// Decode the content
+	begin = time.Now()
+	// Invert the encoded map
+	decoded := make(map[string]string)
+	for key, value := range encoded {
+		decoded[value] = key
+	}
+	// Initialise indexes to pass throught the encoded content
+	pb := 0 // This is pointer blue, he will be slow
+	pr := 1 // This is pointer red, he will be fast (because red is faster than blue)
+	// Lop over the encoded
+	decodedContent := ""
+	for pr < len(encodedFileContent) {
+		// Check if the slice in pointer is a key in the encoded content
+		if char, ok := decoded[encodedFileContent[pb:pr]]; ok {
+			decodedContent += char
+			pb, pr = pr, pr+1
+		} else {
+			pr++
+		}
+	}
+	fmt.Println("Decoding the file content:", time.Since(begin))
+
+	// Write the decoded string in a new file
+	begin = time.Now()
+	err = ioutil.WriteFile("./decoded_output.txt", []byte(decodedContent), 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Writing decoded content:", time.Since(begin))
+
+	totalDecodingTime := time.Since(decodingTime)
+
+	// Print the results
+	fmt.Println()
+	fmt.Println("Total encoding time: ", totalEncodingTime)
+	fmt.Println("Total decoding time: ", totalDecodingTime)
+	fmt.Println("Length of the original text: ", len(content))
+	fmt.Println("Length of the binary encoded text: ", 8*len(content))
+	fmt.Println("Length of the huffman encoded text: ", len(encodedContent))
 }
