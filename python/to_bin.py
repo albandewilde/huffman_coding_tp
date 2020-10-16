@@ -13,12 +13,17 @@ def write_to_file(content, filepath):
     with open(filepath, "w") as fle:
         fle.write(content)
 
-def encode_file_to_bites(reading_file, out_file):
-    content = read_file(reading_file)
+""" J'ai regroupé str_to_bin et cette methode
+    pour eviter de boucler 2 fois"""
+def encode_file_to_bites(txt, out_file):
     encoded = ""
-    for char in str_to_bin(content):
-        encoded += char
+    for char in txt:
+        encoded += "{:08b}".format(ord(char))
     write_to_file(encoded, out_file)
+
+def char_to_bytes(char, encoded):
+    encoded += "{:08b}".format(ord(char))
+    return encoded
 
 if __name__ in "__main__":
     encode_file_to_bites("alice.txt", "encoded_alice.txt")
