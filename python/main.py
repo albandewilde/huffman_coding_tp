@@ -6,11 +6,13 @@ from to_bin import read_file, char_to_bytes, write_to_file
 from count_char import count_char
 from occurence import get_occurence, text_to_bin
 from huffman_tree import sort_occurence_dico, to_dict, to_tree, dico_to_file
+from decode import decode_file
 
 input_file: str = 'alice.txt'
 output_classic_bytes = 'py_encoded_alice.txt'
 output_huffman = 'py_alice_huffman.txt'
 output_huffman_dict = 'py_huffman_dict.txt'
+output_decoded = 'py_decoded_alice.txt'
 
 def browse_txt():
     encoded = ""
@@ -46,6 +48,7 @@ print("Writing to file: ", datetime.datetime.now() - begin)
 
 text_to_bin(alice, output_huffman_dict, output_huffman)
 
+decode_file(output_classic_bytes, output_decoded, huffman_dict)
 
 # Just to see result
 alice_in_bytes = read_file(output_classic_bytes)
